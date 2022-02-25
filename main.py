@@ -19,9 +19,10 @@ def main():
 	pygame.display.set_caption("Space Invaders")
 	pygame.display.set_icon(pygame.image.load("assets/icon.png"))
 	alphaSurf = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+
 	clock = pygame.time.Clock()
 	allSprites = pygame.sprite.Group()
-	player = Player(HALFWIDTH, HEIGHT - 10, allSprites)
+	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
 	background = Background(screen)
 
 	h = 0
@@ -34,12 +35,12 @@ def main():
 
 		dt = clock.tick(FPS) / 1000.0
 		keys = pygame.key.get_pressed()
-		screen.fill(BLACK)
 		
 		if keys[LEFT]:
 			player.update(LEFT, dt)
 		elif keys[RIGHT]:
 			player.update(RIGHT, dt)
+
 		else:
 			player.update(None, dt)
 

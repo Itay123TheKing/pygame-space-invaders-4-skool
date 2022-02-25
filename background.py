@@ -9,20 +9,21 @@ class Background:
 
 		for i in range(STARCOUNT):
 			self.stars.append({
-				'x': random.randint(-HALFWIDTH, HALFWIDTH), 
-				'y': random.randint(0, HEIGHT), 
-				'depth': random.randint(1, MAXDEPTH)
+				'x': random.randint(-SCREEN_HALF_WIDTH, SCREEN_HALF_WIDTH), 
+				'y': random.randint(0, SCREEN_HEIGHT), 
+				'depth': random.randint(1, STAR_MAX_DEPTH)
 			})
 
 	def update(self, playerpos):
-		playerpos -= HALFWIDTH
+		playerpos = -playerpos + SCREEN_HALF_WIDTH
+		self.screen.fill(C_BLACK)
 		for star in self.stars:
-			size = 2 if star['depth'] < MAXDEPTH // 2 else 3
-			x = (star['x'] + playerpos * (star['depth'] / MAXDEPTH) * 0.1) + HALFWIDTH
+			radius = max(1, (star['depth'] / STAR_MAX_DEPTH) * STAR_SIZE)
+			x = (star['x'] + playerpos * (star['depth'] / STAR_MAX_DEPTH) * 0.1) + SCREEN_HALF_WIDTH
 			y = star['y']
-			star['y'] += (star['depth'] / MAXDEPTH) * STARSPEED
-			if star['y'] > HEIGHT:
-				star['y'] = random.randint(-HALFHEIGHT, 0)
-				star['x'] = random.randint(-HALFWIDTH, HALFWIDTH)
-				star['depth'] = random.randint(1, MAXDEPTH)
-			pygame.draw.rect(self.screen, WHITE, (x, y, size, size))
+			star['y'] += (star['depth'] / STAR_MAX_DEPTH) * STAR_SPEED
+			if star['y'] - radius > SCREEN_HEIGHT:
+				star['y'] = random.randint(-SCREEN_HALF_HEIGHT, 0)
+				star['x'] = random.randint(-SCREEN_HALF_WIDTH, SCREEN_HALF_WIDTH)
+				star['depth'] = random.randint(1, STAR_MAX_DEPTH)
+			pygame.draw.circle(self.screen, C_WHITE, (x, y), radius)

@@ -1,16 +1,23 @@
 import pygame
 
-WIDTH, HEIGHT = 800, 600
-HALFWIDTH, HALFHEIGHT = WIDTH // 2, HEIGHT // 2
+# main.py, background.py, player.py
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600 # screen size
+SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 # screen center
 
-FPS = 60
-BLACK, WHITE = (0, 0, 0), (255, 255, 255)
-UP, LEFT, DOWN, RIGHT, ESCAPE = pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d, pygame.K_ESCAPE
+# main.py
+FPS = 60 # frames per second
+K_UP, K_LEFT, K_DOWN, K_RIGHT = pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d # player controls
 
-MAX_VELOCITY = 30
-SPEEDUP = 20
-SLOWDOWN = 30
+# background.py
+C_BLACK, C_WHITE = (0, 0, 0), (255, 255, 255) # colors
 
-MAXDEPTH = 20
+# player.py
+PLAYER_MAX_VELOCITY = 30 # the maximum velocity the player can reach
+PLAYER_SPEEDUP = 20 # the rate at which the player's velocity increases
+PLAYER_SLOWDOWN = 40 # the rate at which the player's velocity decreases
+
+# background.py
+STAR_MAX_DEPTH = 20
 STARCOUNT = 150
-STARSPEED = 0.5
+STAR_SPEED = 0.5
+STAR_SIZE = 2
