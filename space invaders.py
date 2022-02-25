@@ -1,28 +1,28 @@
-from numpy import sign
-import pygame as pg
+from numpy import average, sign
+import pygame
 import random
-pg.init()
+import colorsys
+pygame.init()
 
 WIDTH, HEIGHT = 800, 600
 HALFWIDTH, HALFHEIGHT = WIDTH // 2, HEIGHT // 2
 
 FPS   = 60
 BLACK, WHITE = (0, 0, 0), (255, 255, 255)
-UP, LEFT, DOWN, RIGHT, ESCAPE = pg.K_w, pg.K_a, pg.K_s, pg.K_d, pg.K_ESCAPE
+UP, LEFT, DOWN, RIGHT, ESCAPE = pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d, pygame.K_ESCAPE
 
 MAX_VELOCITY = 30
 SPEEDUP = 20
 SLOWDOWN = 30
-class Player(pg.sprite.Sprite):
-	def __init__(self, x, y, screen):
-		super().__init__()
-		self.image = pg.Surface((32, 32))
+class Player(pygame.sprite.Sprite):
+	def __init__(self, x, y, *groups):
+		super().__init__(*groups)
+		self.image = pygame.Surface((32, 32))
 		self.image.fill(WHITE)
 		self.rect = self.image.get_rect()  # Get rect of some size as 'image'.
 		self.rect.bottom = y
 		self.rect.centerx = x
 		self.velocity = 0
-		self.screen = screen
 		
 
 	def update(self, dir, dt):
@@ -52,8 +52,9 @@ MAXDEPTH = 20
 STARCOUNT = 150
 STARSPEED = 0.5
 class Background:
-	def __init__(self):
+	def __init__(self, screen):
 		self.stars = []
+		self.screen = screen
 
 		for i in range(STARCOUNT):
 			self.stars.append({
@@ -62,7 +63,7 @@ class Background:
 				'depth': random.randint(1, MAXDEPTH)
 			})
 
-	def update(self, playerpos, screen):
+	def update(self, playerpos):
 		playerpos -= HALFWIDTH
 		for star in self.stars:
 			size = 2 if star['depth'] < MAXDEPTH // 2 else 3
@@ -73,22 +74,28 @@ class Background:
 				star['y'] = random.randint(-HALFHEIGHT, 0)
 				star['x'] = random.randint(-HALFWIDTH, HALFWIDTH)
 				star['depth'] = random.randint(1, MAXDEPTH)
-			pg.draw.rect(screen, WHITE, (x, y, size, size))
+			pygame.draw.rect(self.screen, WHITE, (x, y, size, size))
+
+def hsv2rgb(h, s=1.0, v=1):
+	return tuple(int(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
 
 def main():
-	screen = pg.display.set_mode((WIDTH, HEIGHT))
-	alphaSurf = pg.Surface(screen.get_size(), pg.SRCALPHA)
-	clock = pg.time.Clock()
-	player = Player(HALFWIDTH, HEIGHT, screen)
-	background = Background()
+	screen = pygame.display.set_mode((WIDTH, HEIGHT))
+	alphaSurf = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+	clock = pygame.time.Clock()
+	allSprites = pygame.sprite.Group()
+	player = Player(HALFWIDTH, HEIGHT - 10, allSprites)
+	background = Background(screen)
+
+	h = 0
 
 	while True:
 		dt = clock.tick(FPS) / 1000.0
-		keys = pg.key.get_pressed()
+		keys = pygame.key.get_pressed()
 		screen.fill(BLACK)
 		
-		for event in pg.event.get():
-			if event.type == pg.QUIT: return
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT: return
 		if keys[ESCAPE]: return
 		if keys[LEFT]:
 			player.update(LEFT, dt)
@@ -97,13 +104,19 @@ def main():
 		else:
 			player.update(None, dt)
 
-		screen.blit(player.image, player.rect)
+		alphaSurf.fill((*hsv2rgb(h / 64), 220), special_flags=pygame.BLEND_RGBA_MULT)
+		h += 1
+		h %= 64
 
 		background.update(player.rect.centerx)
 
-		pg.display.update()
+		allSprites.draw(alphaSurf)
+
+		screen.blit(alphaSurf, (0, 0))
+
+		pygame.display.update()
 
 if __name__ == '__main__':
 	main()
-	pg.quit()
+	pygame.quit()
 	quit()
