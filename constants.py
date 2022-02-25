@@ -1,0 +1,16 @@
+import pygame
+
+WIDTH, HEIGHT = 800, 600
+HALFWIDTH, HALFHEIGHT = WIDTH // 2, HEIGHT // 2
+
+FPS = 60
+BLACK, WHITE = (0, 0, 0), (255, 255, 255)
+UP, LEFT, DOWN, RIGHT, ESCAPE = pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d, pygame.K_ESCAPE
+
+MAX_VELOCITY = 30
+SPEEDUP = 20
+SLOWDOWN = 30
+
+MAXDEPTH = 20
+STARCOUNT = 150
+STARSPEED = 0.5
