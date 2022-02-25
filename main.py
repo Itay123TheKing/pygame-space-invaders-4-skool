@@ -16,6 +16,8 @@ def hsv2rgb(h, s=1.0, v=1):
 
 def main():
 	screen = pygame.display.set_mode((WIDTH, HEIGHT))
+	pygame.display.set_caption("Space Invaders")
+	pygame.display.set_icon(pygame.image.load("assets/icon.png"))
 	alphaSurf = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
 	clock = pygame.time.Clock()
 	allSprites = pygame.sprite.Group()
@@ -54,5 +56,5 @@ def main():
 
 		pygame.display.update()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()
