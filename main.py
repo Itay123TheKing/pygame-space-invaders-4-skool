@@ -36,7 +36,6 @@ def main():
 		keys = pygame.key.get_pressed()
 		screen.fill(BLACK)
 		
-		if keys[ESCAPE]: return
 		if keys[LEFT]:
 			player.update(LEFT, dt)
 		elif keys[RIGHT]:
