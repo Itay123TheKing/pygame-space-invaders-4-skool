@@ -1,3 +1,7 @@
+# Remove pygame "Hello from the pygame community." message
+import os
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "something"
+
 from constants import *
 import pygame
 import pygame.locals as locals
