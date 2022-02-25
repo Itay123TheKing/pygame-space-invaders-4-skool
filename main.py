@@ -15,11 +15,11 @@ def hsv2rgb(h, s=1.0, v=1):
 	return tuple(int(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
 
 def main():
-	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-	# main screen
-	alphaSurf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
-	# surface for adding alpha visual effect
-	
+	screen = pygame.display.set_mode((WIDTH, HEIGHT))
+	pygame.display.set_caption("Space Invaders")
+	pygame.display.set_icon(pygame.image.load("assets/icon.png"))
+	alphaSurf = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+
 	clock = pygame.time.Clock()
 	allSprites = pygame.sprite.Group()
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
@@ -36,11 +36,11 @@ def main():
 		dt = clock.tick(FPS) / 1000.0
 		keys = pygame.key.get_pressed()
 		
-		if keys[pygame.K_ESCAPE]: return
-		if keys[K_LEFT]:
-			player.update(K_LEFT, dt)
-		elif keys[K_RIGHT]:
-			player.update(K_RIGHT, dt)
+		if keys[LEFT]:
+			player.update(LEFT, dt)
+		elif keys[RIGHT]:
+			player.update(RIGHT, dt)
+
 		else:
 			player.update(None, dt)
 
@@ -56,5 +56,5 @@ def main():
 
 		pygame.display.update()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()
