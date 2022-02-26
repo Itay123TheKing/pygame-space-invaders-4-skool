@@ -2,20 +2,21 @@ from constants import *
 import math
 import random
 import pygame
+from typing import Dict, List
 
 class Background:
-	def __init__(self, screen):
-		self.stars = []
+	def __init__(self, screen: pygame.Surface) -> None:
+		self.stars: List[Dict] = []
 		self.screen = screen
 
-		for i in range(STARCOUNT):
+		for _ in range(STARCOUNT):
 			self.stars.append({
 				'x': random.randint(-SCREEN_HALF_WIDTH, SCREEN_HALF_WIDTH), 
 				'y': random.randint(0, SCREEN_HEIGHT), 
 				'depth': random.randint(1, STAR_MAX_DEPTH)
 			})
 
-	def update(self, playerpos):
+	def update(self, playerpos: int) -> None:
 		playerpos = -playerpos + SCREEN_HALF_WIDTH
 		self.screen.fill(C_BLACK)
 		for star in self.stars:
