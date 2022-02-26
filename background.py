@@ -1,4 +1,5 @@
 from constants import *
+import math
 import random
 import pygame
 from typing import Dict, List
@@ -19,7 +20,7 @@ class Background:
 		playerpos = -playerpos + SCREEN_HALF_WIDTH
 		self.screen.fill(C_BLACK)
 		for star in self.stars:
-			radius = max(1, (star['depth'] / STAR_MAX_DEPTH) * STAR_SIZE)
+			radius = math.ceil((star['depth'] / STAR_MAX_DEPTH) * STAR_SIZE)
 			x = (star['x'] + playerpos * (star['depth'] / STAR_MAX_DEPTH) * 0.1) + SCREEN_HALF_WIDTH
 			y = star['y']
 			star['y'] += (star['depth'] / STAR_MAX_DEPTH) * STAR_SPEED
@@ -27,4 +28,4 @@ class Background:
 				star['y'] = random.randint(-SCREEN_HALF_HEIGHT, 0)
 				star['x'] = random.randint(-SCREEN_HALF_WIDTH, SCREEN_HALF_WIDTH)
 				star['depth'] = random.randint(1, STAR_MAX_DEPTH)
-			pygame.draw.circle(self.screen, C_WHITE, (x, y), radius)
+			pygame.draw.rect(self.screen, C_WHITE, (x, y, radius, radius))
