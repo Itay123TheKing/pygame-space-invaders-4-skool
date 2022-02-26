@@ -20,7 +20,6 @@ class Background:
 		self.screen.fill(C_BLACK)
 		for star in self.stars:
 			radius = math.ceil((star['depth'] / STAR_MAX_DEPTH) * STAR_SIZE)
-			assert(radius > 0)
 			x = (star['x'] + playerpos * (star['depth'] / STAR_MAX_DEPTH) * 0.1) + SCREEN_HALF_WIDTH
 			y = star['y']
 			star['y'] += (star['depth'] / STAR_MAX_DEPTH) * STAR_SPEED
