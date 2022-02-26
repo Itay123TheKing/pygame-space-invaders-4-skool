@@ -3,17 +3,17 @@ from numpy import sign
 import pygame
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self, x, y, *groups):
+	def __init__(self, x: int, y: int, *groups: pygame.sprite.Group) -> None:
 		super().__init__(*groups)
-		self.image = pygame.Surface((32, 32))
+		self.image: pygame.Surface = pygame.Surface((32, 32))
 		self.image.fill(C_WHITE)
-		self.rect = self.image.get_rect()  # Get rect of some size as 'image'.
+		self.rect: pygame.Rect = self.image.get_rect()  # Get rect of some size as 'image'.
 		self.rect.bottom = y
 		self.rect.centerx = x
-		self.velocity = 0
+		self.velocity: int = 0
 		
 
-	def update(self, dir, dt):
+	def update(self, dir: int, dt: float) -> None:
 		if dir == K_LEFT:
 			self.velocity -= PLAYER_SPEEDUP * dt
 		elif dir == K_RIGHT:

@@ -6,15 +6,16 @@ from constants import *
 import pygame
 import pygame.locals as locals
 import colorsys
+from typing import Tuple
 from player import Player
 from background import Background
 
 pygame.init()
 
-def hsv2rgb(h, s=1.0, v=1):
+def hsv2rgb(h: float, s: float = 1.0, v: float = 1.0) -> Tuple[int, int, int]:
 	return tuple(int(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
 
-def main():
+def main() -> None:
 	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 	pygame.display.set_caption("Space Invaders")
 	pygame.display.set_icon(pygame.image.load("assets/icon.png"))
