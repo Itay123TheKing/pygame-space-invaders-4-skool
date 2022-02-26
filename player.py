@@ -11,17 +11,15 @@ class Player(pygame.sprite.Sprite):
 		self.rect.bottom = y
 		self.rect.centerx = x
 		self.velocity = 0
-		
+		self.direction = 0		
 
-	def update(self, dir, dt):
-		if dir == K_LEFT:
-			self.velocity -= PLAYER_SPEEDUP * dt
-		elif dir == K_RIGHT:
-			self.velocity += PLAYER_SPEEDUP * dt
-		else:
+	def update(self, dt):
+		if self.direction == 0:
 			self.velocity += -sign(self.velocity) * PLAYER_SLOWDOWN * dt
 			if abs(self.velocity) < PLAYER_SLOWDOWN * dt:
 				self.velocity = 0
+		else:
+			self.velocity += self.direction * PLAYER_SPEEDUP * dt
 	
 		if self.velocity > PLAYER_MAX_VELOCITY:
 			self.velocity = PLAYER_MAX_VELOCITY
@@ -35,3 +33,13 @@ class Player(pygame.sprite.Sprite):
 		if self.rect.right > SCREEN_WIDTH:
 			self.rect.right = SCREEN_WIDTH
 			self.velocity = 0
+	
+	def move(self, keys):
+		if keys[K_LEFT] and keys[K_RIGHT]:
+			pass
+		elif keys[K_LEFT]:
+			self.direction = -1
+		elif keys[K_RIGHT]:
+			self.direction = 1
+		else:
+			self.direction = 0

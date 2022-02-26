@@ -6,8 +6,9 @@ from constants import *
 import pygame
 import pygame.locals as locals
 import colorsys
-from player import Player
 from background import Background
+from player import Player
+from enemy import Enemy
 
 pygame.init()
 
@@ -15,15 +16,14 @@ def hsv2rgb(h, s=1.0, v=1):
 	return tuple(int(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
 
 def main():
-	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-	# main screen
 	alphaSurf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
 	# surface for adding alpha visual effect
 	
 	clock = pygame.time.Clock()
 	allSprites = pygame.sprite.Group()
+	background = Background(SCREEN)
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
-	background = Background(screen)
+	enemy = Enemy(1, 0, 0)
 
 	h = 0
 
@@ -37,22 +37,21 @@ def main():
 		keys = pygame.key.get_pressed()
 		
 		if keys[pygame.K_ESCAPE]: return
-		if keys[K_LEFT]:
-			player.update(K_LEFT, dt)
-		elif keys[K_RIGHT]:
-			player.update(K_RIGHT, dt)
-		else:
-			player.update(None, dt)
-
+		player.move(keys)
+		player.update(dt)
+		
 		alphaSurf.fill((*hsv2rgb(h / 64), 220), special_flags=pygame.BLEND_RGBA_MULT)
 		h += 1
 		h %= 64
-
+		
 		background.update(player.rect.centerx)
 
 		allSprites.draw(alphaSurf)
 
-		screen.blit(alphaSurf, (0, 0))
+		SCREEN.blit(alphaSurf, (0, 0))
+
+		enemy.update()
+		enemy.draw(SCREEN)
 
 		pygame.display.update()
 
