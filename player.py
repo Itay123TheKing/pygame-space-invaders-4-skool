@@ -11,7 +11,8 @@ class Player(pygame.sprite.Sprite):
 		self.rect.bottom = y
 		self.rect.centerx = x
 		self.velocity = 0
-		self.direction = 0		
+		self.direction = 0
+		self.score = 0
 
 	def update(self, dt):
 		if self.direction == 0:
@@ -43,3 +44,6 @@ class Player(pygame.sprite.Sprite):
 			self.direction = 1
 		else:
 			self.direction = 0
+
+	def addScore(self, score: int):
+		self.score += score
