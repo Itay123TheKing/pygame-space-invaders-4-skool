@@ -7,30 +7,32 @@ import pygame
 import pygame.locals as locals
 import pygame.font as font
 import colorsys
-from typing import Tuple
-from player import Player
 from background import Background
+from player import Player
+from enemy import Enemy
 
 pygame.init()
 font.init()
 
 
 
-def hsv2rgb(h: float, s: float = 1.0, v: float = 1.0) -> Tuple[int, int, int]:
+def hsv2rgb(h, s=1.0, v=1):
 	return tuple(int(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
 
-def main() -> None:
-	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+def main():
 	pygame.display.set_caption("Space Invaders")
 	pygame.display.set_icon(pygame.image.load("assets/icon.png"))
+
+  # surface for adding alpha visual effect, still needs work
 	alphaSurf = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
 
 	retroFont = font.Font("assets/font/prstart.ttf", 16)
 
 	clock = pygame.time.Clock()
 	allSprites = pygame.sprite.Group()
+	background = Background(SCREEN)
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
-	background = Background(screen)
+	enemy = Enemy(1, 0, 0)
 
 	h = 0
 
@@ -43,23 +45,23 @@ def main() -> None:
 
 		dt = clock.tick(FPS) / 1000.0
 		keys = pygame.key.get_pressed()
-		
-		if keys[K_LEFT]:
-			player.update(K_LEFT, dt)
-		elif keys[K_RIGHT]:
-			player.update(K_RIGHT, dt)
-		else:
-			player.update(None, dt)
 
+		if keys[pygame.K_ESCAPE]: return
+		player.move(keys)
+		player.update(dt)
+		
 		alphaSurf.fill((*hsv2rgb(h / 64), 220), special_flags=pygame.BLEND_RGBA_MULT)
 		h += 1
 		h %= 64
-
+		
 		background.update(player.rect.centerx)
 
 		allSprites.draw(alphaSurf)
 
-		screen.blit(alphaSurf, (0, 0))
+		SCREEN.blit(alphaSurf, (0, 0))
+
+		enemy.update()
+		enemy.draw(SCREEN)
 
 		screen.blit(retroFont.render(f"FPS: {int(clock.get_fps())}", True, (255, 255, 255)), (10, 10))
 

@@ -3,25 +3,23 @@ from numpy import sign
 import pygame
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self, x: int, y: int, *groups: pygame.sprite.Group) -> None:
+	def __init__(self, x, y, *groups):
 		super().__init__(*groups)
-		self.image: pygame.Surface = pygame.Surface((32, 32))
+		self.image = pygame.Surface((32, 32))
 		self.image.fill(C_WHITE)
-		self.rect: pygame.Rect = self.image.get_rect()  # Get rect of some size as 'image'.
+		self.rect = self.image.get_rect()  # Get rect of some size as 'image'.
 		self.rect.bottom = y
 		self.rect.centerx = x
-		self.velocity: int = 0
-		
+		self.velocity = 0
+		self.direction = 0		
 
-	def update(self, dir: int, dt: float) -> None:
-		if dir == K_LEFT:
-			self.velocity -= PLAYER_SPEEDUP * dt
-		elif dir == K_RIGHT:
-			self.velocity += PLAYER_SPEEDUP * dt
-		else:
+	def update(self, dt):
+		if self.direction == 0:
 			self.velocity += -sign(self.velocity) * PLAYER_SLOWDOWN * dt
 			if abs(self.velocity) < PLAYER_SLOWDOWN * dt:
 				self.velocity = 0
+		else:
+			self.velocity += self.direction * PLAYER_SPEEDUP * dt
 	
 		if self.velocity > PLAYER_MAX_VELOCITY:
 			self.velocity = PLAYER_MAX_VELOCITY
@@ -35,3 +33,13 @@ class Player(pygame.sprite.Sprite):
 		if self.rect.right > SCREEN_WIDTH:
 			self.rect.right = SCREEN_WIDTH
 			self.velocity = 0
+	
+	def move(self, keys):
+		if keys[K_LEFT] and keys[K_RIGHT]:
+			pass
+		elif keys[K_LEFT]:
+			self.direction = -1
+		elif keys[K_RIGHT]:
+			self.direction = 1
+		else:
+			self.direction = 0
