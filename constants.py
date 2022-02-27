@@ -14,6 +14,7 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # main output su
 PLAYER_MAX_VELOCITY = 30 # the maximum velocity the player can reach
 PLAYER_SPEEDUP = 20 # the rate at which the player's velocity increases
 PLAYER_SLOWDOWN = 40 # the rate at which the player's velocity decreases
+PLAYER_SCORE_FILE = "score.json" # the file to save the player's score
 
 # background.py
 C_BLACK, C_WHITE = (0, 0, 0), (255, 255, 255) # colors
@@ -24,7 +25,6 @@ STAR_SIZE = 2 # the maximum size of a star (also the number of possible sizes)
 
 # enemy.py
 VALID_ENEMIES = {1, 2, 3}
-ENEMY_SPRITESHEET = pygame.image.load('Sprites\Enemies.png').convert_alpha()
 ENEMY_WIDTH, ENEMY_HEIGHT = 16, 8
 ENEMY_SCALE = 5
 ENEMY_FPS = 2
