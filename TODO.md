@@ -6,6 +6,7 @@ Space Invaders Based Game For School Project
 
 - [ ] HUD class
 - [ ] Turn enemy types to an Enum
+- [ ] Revamp alpha layer
 
 ### In Progress
 
