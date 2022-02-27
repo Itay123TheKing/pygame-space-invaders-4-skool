@@ -11,9 +11,10 @@ class AnimatedSprite(pygame.sprite.Sprite):
 			self.frames[i].blit(sprite_sheet, (0, 0), (i * width, 0, width, height)) 
 
 		if scale != 1:
-			self.frames = [pygame.transform.scale(frame, (width * scale, height * scale)) 
+			self.frames = [pygame.transform.scale(frame, (width * scale, height * scale))
 				for frame in self.frames]
 
+		self.colour_key = colourkey
 		for frame in self.frames:
 			frame.set_colorkey(colourkey)
 		
@@ -36,3 +37,10 @@ class AnimatedSprite(pygame.sprite.Sprite):
 	
 	def draw(self, surface, x, y):
 		surface.blit(self.image, (x, y))
+
+	def flip(self, flip_x: bool, flip_y: bool) -> None:
+		self.frames = [pygame.transform.flip(frame, flip_x, flip_y)
+			for frame in self.frames]
+		for frame in self.frames:
+			frame.set_colorkey(self.colour_key)
+		self.image = self.frames[self.current_frame]

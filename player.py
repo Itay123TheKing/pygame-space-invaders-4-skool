@@ -1,19 +1,20 @@
 from constants import *
 from numpy import sign
 import pygame
+from animated_sprite import AnimatedSprite
 
-class Player(pygame.sprite.Sprite):
+class Player(AnimatedSprite):
 	def __init__(self, x: int, y: int, *groups: pygame.sprite.Group) -> None:
-		super().__init__(*groups)
-		self.image: pygame.Surface = pygame.Surface((32, 32))
-		self.image.fill(C_WHITE)
-		self.rect: pygame.Rect = self.image.get_rect()  # Get rect of some size as 'image'.
+		super().__init__(pygame.image.load('Sprites/Nyan Cat.png'),
+		(0, 255, 255), 50, 22, 5, 5, 1, *groups)
 		self.rect.bottom = y
 		self.rect.centerx = x
 		self.velocity = 0
-		self.direction = 0		
+		self.direction = 0
+		self.facing = 1
 
 	def update(self, dt):
+		super().update()
 		if self.direction == 0:
 			self.velocity += -sign(self.velocity) * PLAYER_SLOWDOWN * dt
 			if abs(self.velocity) < PLAYER_SLOWDOWN * dt:
@@ -39,7 +40,13 @@ class Player(pygame.sprite.Sprite):
 			pass
 		elif keys[K_LEFT]:
 			self.direction = -1
+			if self.direction != self.facing:
+				self.flip(True, False)
+				self.facing = self.direction
 		elif keys[K_RIGHT]:
 			self.direction = 1
+			if self.direction != self.facing:
+				self.flip(True, False)
+				self.facing = self.direction
 		else:
 			self.direction = 0

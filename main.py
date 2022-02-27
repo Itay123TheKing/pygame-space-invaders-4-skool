@@ -24,8 +24,8 @@ def main() -> None:
   
 	clock = pygame.time.Clock()
 	allSprites = pygame.sprite.Group()
-	background = Background(SCREEN)
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
+	background = Background(SCREEN, player)
 	enemy = Enemy(1, 0, 0)
 
 	h = 0
@@ -47,7 +47,7 @@ def main() -> None:
 		h += 1
 		h %= 64
 		
-		background.update(player.rect.centerx)
+		background.update()
 
 		allSprites.draw(alphaSurf)
 
