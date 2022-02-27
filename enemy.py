@@ -1,9 +1,10 @@
+from typing import Literal
 from constants import *
 import pygame
 import animated_sprite
 
 class Enemy(animated_sprite.AnimatedSprite):
-	def __init__(self, type, x, y, *groups):
+	def __init__(self, type: Literal[1, 2, 3], x, y, *groups):
 		if type not in VALID_ENEMIES:
 			raise ValueError(f"Enemy type must be one of {VALID_ENEMIES}.")
 		super().__init__(pygame.image.load(f'assets/sprites/enemy{type}.png').convert_alpha(), 

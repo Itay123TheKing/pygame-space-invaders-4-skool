@@ -19,12 +19,14 @@ PLAYER_SCORE_FILE = "score.json" # the file to save the player's score
 # background.py
 C_BLACK, C_WHITE = (0, 0, 0), (255, 255, 255) # colors
 STAR_MAX_DEPTH = 20 # the maximum depth (3D) of a star
-STARCOUNT = 150 # ~the number of stars in the background at any given time
+STAR_COUNT = 150 # ~the number of stars in the background at any given time
 STAR_SPEED = 0.5 # the speed at which the stars move
 STAR_SIZE = 2 # the maximum size of a star (also the number of possible sizes)
+STAR_COLOURS = [(255, 255, 255, 255), (170, 170, 0, 150), (255, 255, 255, 170), (150, 225, 225, 255)]
 
 # enemy.py
 VALID_ENEMIES = {1, 2, 3}
+ENEMIES = [pygame.image.load(f'assets/sprites/enemy{i}.png').convert_alpha() for i in VALID_ENEMIES]
 ENEMY_WIDTH, ENEMY_HEIGHT = 16, 8
 ENEMY_SCALE = 5
 ENEMY_FPS = 2
