@@ -16,23 +16,6 @@ from typing import Dict, List
 pygame.init()
 font.init()
 
-# Scores will look like this:
-dic = {
-	"scores": [
-		{
-			"name": "nameHere",
-			"highscore": "scoreHere"
-		},
-		{
-			"name": "anotherNameHere",
-			"highscore": "anotherScoreHere"
-		}
-	]
-}
-
-# and sorting that is fairly simple with pythons array.sort and a lambda
-dic['scores'].sort(key=lambda player: player["highscore"], reverse=True)
-
 def hsv2rgb(h, s=1.0, v=1):
 	return tuple(int(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
 
