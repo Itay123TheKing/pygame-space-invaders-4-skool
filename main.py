@@ -1,5 +1,4 @@
 # Remove pygame "Hello from the pygame community." message
-from decimal import DivisionByZero
 import os
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "something"
 

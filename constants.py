@@ -25,7 +25,6 @@ STAR_SIZE = 2 # the maximum size of a star (also the number of possible sizes)
 
 # enemy.py
 VALID_ENEMIES = {1, 2, 3}
-ENEMY_SPRITESHEET = pygame.image.load('assets/sprites/enemies.png').convert_alpha()
 ENEMY_WIDTH, ENEMY_HEIGHT = 16, 8
 ENEMY_SCALE = 5
 ENEMY_FPS = 2
