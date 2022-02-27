@@ -13,4 +13,4 @@ Space Invaders Based Game For School Project
 
 ### Done ✓
 
-- [X] Using a star class rather than using a dictionary
+- [ ] Using a star class rather than using a dictionary

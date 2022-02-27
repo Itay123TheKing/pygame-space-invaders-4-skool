@@ -5,7 +5,7 @@ from animated_sprite import AnimatedSprite
 
 class Player(AnimatedSprite):
 	def __init__(self, x: int, y: int, *groups: pygame.sprite.Group) -> None:
-		super().__init__(pygame.image.load('Sprites/Nyan Cat.png'),
+		super().__init__(pygame.image.load('assets/sprites/nyan_cat.png'),
 		(0, 255, 255), 50, 22, 5, 5, 1, *groups)
 		self.rect.bottom = y
 		self.rect.centerx = x
