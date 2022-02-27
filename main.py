@@ -5,12 +5,16 @@ os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "something"
 from constants import *
 import pygame
 import pygame.locals as locals
+import pygame.font as font
 import colorsys
 from background import Background
 from player import Player
 from enemy import Enemy
 
 pygame.init()
+font.init()
+
+
 
 def hsv2rgb(h, s=1.0, v=1):
 	return tuple(int(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
@@ -18,9 +22,12 @@ def hsv2rgb(h, s=1.0, v=1):
 def main():
 	pygame.display.set_caption("Space Invaders")
 	pygame.display.set_icon(pygame.image.load("assets/icon.png"))
-	alphaSurf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
-	# surface for adding alpha visual effect, still needs work
-  
+
+  # surface for adding alpha visual effect, still needs work
+	alphaSurf = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+
+	retroFont = font.Font("assets/font/prstart.ttf", 16)
+
 	clock = pygame.time.Clock()
 	allSprites = pygame.sprite.Group()
 	background = Background(SCREEN)
@@ -33,6 +40,7 @@ def main():
 		for event in pygame.event.get():
 			if event.type == locals.QUIT:
 				pygame.quit()
+				font.quit()
 				quit()
 
 		dt = clock.tick(FPS) / 1000.0
@@ -54,6 +62,8 @@ def main():
 
 		enemy.update()
 		enemy.draw(SCREEN)
+
+		screen.blit(retroFont.render(f"FPS: {int(clock.get_fps())}", True, (255, 255, 255)), (10, 10))
 
 		pygame.display.update()
 
