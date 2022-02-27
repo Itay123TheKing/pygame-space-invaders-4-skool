@@ -34,9 +34,6 @@ class AnimatedSprite(pygame.sprite.Sprite):
 		if now - self.last_tick > 1000 / self.fps:
 			self.next_frame()
 			self.last_tick = now
-	
-	def draw(self, surface, x, y):
-		surface.blit(self.image, (x, y))
 
 	def flip(self, flip_x: bool, flip_y: bool) -> None:
 		self.frames = [pygame.transform.flip(frame, flip_x, flip_y)

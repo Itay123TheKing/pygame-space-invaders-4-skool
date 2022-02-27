@@ -14,7 +14,7 @@ class Player(AnimatedSprite):
 		self.score = 0
 		self.facing = 1
 
-	def update(self, dt):
+	def update(self, dt: float) -> None:
 		super().update()
 		if self.direction == 0:
 			self.velocity += -sign(self.velocity) * PLAYER_SLOWDOWN * dt
@@ -36,7 +36,7 @@ class Player(AnimatedSprite):
 			self.rect.right = SCREEN_WIDTH
 			self.velocity = 0
 	
-	def move(self, keys):
+	def move(self, keys: dict) -> None:
 		if keys[K_LEFT] and keys[K_RIGHT]:
 			pass
 		elif keys[K_LEFT]:
@@ -52,5 +52,5 @@ class Player(AnimatedSprite):
 		else:
 			self.direction = 0
 
-	def addScore(self, score: int):
+	def addScore(self, score: int) -> None:
 		self.score += score
