@@ -16,4 +16,4 @@ class Enemy(animated_sprite.AnimatedSprite):
 		self.y = y
 
 	def draw(self, surface: pygame.Surface) -> None:
-		surface.blit(super().image, self.x, self.y)
+		surface.blit(self.image, (self.x, self.y))
