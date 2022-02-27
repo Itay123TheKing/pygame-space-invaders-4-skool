@@ -4,9 +4,10 @@ Space Invaders Based Game For School Project
 
 ### Todo
 
+- [ ] Clean main.py
+- [ ] Revamp alpha layer
 - [ ] HUD class
 - [ ] Turn enemy types to an Enum
-- [ ] Revamp alpha layer
 - [ ] Player shooting
 - [ ] Sheilds
 - [ ] Enem*ies* class:
@@ -21,4 +22,4 @@ Space Invaders Based Game For School Project
 
 ### Done ✓
 
-- [ ] Using a star class rather than using a dictionary
+- [X] Using a star class rather than using a dictionary

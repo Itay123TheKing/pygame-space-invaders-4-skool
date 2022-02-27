@@ -10,7 +10,7 @@ import pygame.font as font
 import colorsys
 from background import Background
 from player import Player
-from enemy import Enemy
+from enemy import Enemy, EnemyType
 from typing import Dict, List
 
 pygame.init()
@@ -57,9 +57,9 @@ def main():
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
 
 	enemies = []
-	enemies.append(Enemy(1, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
-	enemies.append(Enemy(2, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
-	enemies.append(Enemy(3, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
+	enemies.append(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
+	enemies.append(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
+	enemies.append(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
 	background = Background(SCREEN, player)
 
 	h = 0
