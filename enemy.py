@@ -3,6 +3,7 @@ import random
 from constants import *
 import pygame
 import animated_sprite
+import random
 
 class EnemyType(Enum):
 	SQUID   = SMALL  = TYPE1 = 1
