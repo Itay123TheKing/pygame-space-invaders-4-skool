@@ -2,6 +2,7 @@
 import os
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "something"
 
+from enemies import Enemies
 from constants import *
 import pygame
 import json
@@ -44,6 +45,11 @@ def main():
 		with open(PLAYER_SCORE_FILE, "w") as writeFile:
 			json.dump({"scores": []}, writeFile, indent="\t")
 
+	highscore = 0
+	if highScores and len(highScores) > 0:
+		highScores.sort(key=lambda n: n['score'], reverse=True)
+		highscore = highScores[0]['score']
+
 	pygame.display.set_caption("Space Invaders")
 	pygame.display.set_icon(pygame.image.load("assets/icon.png"))
 
@@ -56,11 +62,11 @@ def main():
 	allSprites = pygame.sprite.Group()
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
 
-	enemies = []
+	enemies = Enemies()
 
-	enemies.append(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
-	enemies.append(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
-	enemies.append(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
 
 	background = Background(SCREEN, player)
 
@@ -102,16 +108,25 @@ def main():
 
 		SCREEN.blit(alphaSurf, (0, 0))
 
-		for enemy in enemies:
-			enemy.update()
-			enemy.draw(SCREEN)
+		enemies.update()
+		enemies.draw(SCREEN)
 
-		SCREEN.blit(retroFont.render(f"SCORE: {player.score}", True, C_WHITE), (10, 10))
+		scoreText = retroFont.render(f"SCORE", True, (255, 255, 255))
+		scoreValue = retroFont.render(f"{player.score:04}", True, (255, 255, 255))
+
+		highscoreText = retroFont.render(f"HI-SCORE", True, (255, 255, 255))
+		highscoreValue = retroFont.render(f"{highscore:04}", True, (255, 255, 255))
+
+		SCREEN.blit(scoreText, (10, 10))
+		SCREEN.blit(scoreValue, (10, 20 + scoreText.get_rect().bottom))
+
+		SCREEN.blit(highscoreText, (SCREEN_WIDTH - highscoreText.get_rect().width - 10, 10))
+		SCREEN.blit(highscoreValue, (SCREEN_WIDTH - highscoreValue.get_rect().width - 10, 20 + highscoreText.get_rect().bottom))
 
 		if pygame.time.get_ticks() % FPS == 0:
 			player.addScore(1)
 
-		SCREEN.blit(retroFont.render(f"FPS: {int(clock.get_fps())}", True, (255, 255, 255)), (10, 30))
+		SCREEN.blit(retroFont.render(f"FPS: {int(clock.get_fps())}", True, (255, 255, 255)), (10, SCREEN.get_height() - 25))
 
 		pygame.display.flip()
 
