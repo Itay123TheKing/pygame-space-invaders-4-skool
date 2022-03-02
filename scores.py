@@ -54,11 +54,11 @@ class Scores:
 		if self.player.score > self.highscore:
 			self.highscore = self.player.score
 
-		if time_passed > 1: # 1 second
+		if self.time_passed > 1: # 1 second
 			self.player.addScore(1)
-			time_passed = 0
+			self.time_passed = 0
 
-		time_passed += dt		
+		self.time_passed += dt		
 
 		
 
