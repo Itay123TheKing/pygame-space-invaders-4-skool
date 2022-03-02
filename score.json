@@ -1,28 +1,40 @@
 {
 	"scores": [
 		{
-			"name": "0x7fd1ae26fb50",
+			"name": "0x29527bed700",
+			"score": 11
+		},
+		{
+			"name": "0x253414e1760",
+			"score": 59
+		},
+		{
+			"name": "0x17b7fb96a90",
+			"score": 30
+		},
+		{
+			"name": "0x176a1215a00",
+			"score": 54
+		},
+		{
+			"name": "0x1c3e24c04f0",
+			"score": 18
+		},
+		{
+			"name": "0x1890d131a00",
+			"score": 39
+		},
+		{
+			"name": "0x1c93f391a00",
 			"score": 3
 		},
 		{
-			"name": "0x7f42206adcc0",
-			"score": 9
+			"name": "0x2986dd31a00",
+			"score": 14
 		},
 		{
-			"name": "0x7ff68ae8d9c0",
-			"score": 1
-		},
-		{
-			"name": "0x187114912e0",
-			"score": 16
-		},
-		{
-			"name": "0x7f67c9df80d0",
-			"score": 5
-		},
-		{
-			"name": "0x7fa1240e6ad0",
-			"score": 8
+			"name": "0x1f1d2241370",
+			"score": 29
 		}
 	]
 }

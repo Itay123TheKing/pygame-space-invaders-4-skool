@@ -35,6 +35,9 @@ class AnimatedSprite(pygame.sprite.Sprite):
 			self.next_frame()
 			self.last_tick = now
 
+	def draw(self, surface: pygame.Surface) -> None:
+		surface.blit(self.image, self.rect)
+
 	def flip(self, flip_x: bool, flip_y: bool) -> None:
 		self.frames = [pygame.transform.flip(frame, flip_x, flip_y)
 			for frame in self.frames]

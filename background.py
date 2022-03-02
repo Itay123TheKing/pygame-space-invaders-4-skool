@@ -10,7 +10,7 @@ class Background:
 		def __init__(self) -> None:
 			self.x = random.randint(-SCREEN_HALF_WIDTH, SCREEN_HALF_WIDTH)
 			self.y = random.randint(-SCREEN_HALF_HEIGHT, SCREEN_HEIGHT)
-			self.depth = random.randint(1, STAR_MAX_DEPTH)
+			self.depth = random.randint(1, STAR_MAX_DEPTH * .6)
 			self.size = math.ceil((self.depth / STAR_MAX_DEPTH) * STAR_SIZE)
 			self.colour = random.choice(STAR_COLOURS)
 
