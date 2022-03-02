@@ -33,10 +33,9 @@ def main():
 	hud.load()
 
 	enemies = Enemies()
-	enemies.add(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
-	enemies.add(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
-	enemies.add(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
-
+	for i in range(ENEMY_COUNT):
+		enemies.add(Enemy(EnemyType(i % 3 + 1), SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
+	
 	alpha_surf.bind(enemies.group, C_GREEN)
 	background = Background(SCREEN, player)
 

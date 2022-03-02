@@ -16,8 +16,8 @@ class Enemy(animated_sprite.AnimatedSprite):
 			ENEMY_FRAMECOUNT, ENEMY_FPS, ENEMY_SCALE, *groups)
 
 		self.type = type
-		self.x_vel = random.randrange(5, 10) * random.choice([-1, 1])
-		self.y_vel = random.randrange(5, 10) * random.choice([-1, 1])
+		self.x_vel = random.randint(5, 10) * random.choice([-1, 1])
+		self.y_vel = random.randint(5, 10) * random.choice([-1, 1])
 		self.rect.x = x
 		self.rect.y = y
 
@@ -31,7 +31,15 @@ class Enemy(animated_sprite.AnimatedSprite):
 	def update(self):
 		super().update()
 		self.move(self.x_vel, self.y_vel)
-		if self.rect.left < 0 or self.rect.right > SCREEN_WIDTH:
+		if self.rect.left < 0:
+			self.rect.left = 0
 			self.x_vel *= -1
-		if self.rect.top < 0 or self.rect.bottom > SCREEN_HEIGHT:
+		if self.rect.right > SCREEN_WIDTH:
+			self.rect.right = SCREEN_WIDTH
+			self.x_vel *= -1
+		if self.rect.top < 0:
+			self.rect.top = 0
+			self.y_vel *= -1
+		if self.rect.bottom > SCREEN_HEIGHT:
+			self.rect.bottom = SCREEN_HEIGHT
 			self.y_vel *= -1
