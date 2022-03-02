@@ -1,5 +1,5 @@
-import pygame
 from constants import *
+import pygame
 from linked_list import LinkedList
 
 class Enemies:
@@ -12,9 +12,11 @@ class Enemies:
 	"""
 	def __init__(self):
 		self.enemies = LinkedList()
+		self.group = pygame.sprite.Group()
 
 	def add(self, enemy):
 		self.enemies.push_back(enemy)
+		self.group.add(enemy)
 	
 	def update(self):
 		for enemy in self.enemies:

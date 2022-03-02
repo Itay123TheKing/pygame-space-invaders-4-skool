@@ -1,8 +1,7 @@
 from typing import Literal, Tuple, Union, List
 from enum import Enum
-from numpy import isin
-import pygame
 import colorsys
+import pygame
 
 class flags(Enum):
 	NONE            = 0
