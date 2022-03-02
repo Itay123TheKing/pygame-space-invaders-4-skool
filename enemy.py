@@ -16,19 +16,21 @@ class Enemy(animated_sprite.AnimatedSprite):
 			ENEMY_FRAMECOUNT, ENEMY_FPS, ENEMY_SCALE, *groups)
 
 		self.type = type
-		self.x_vel = random.randint(5, 10) * random.choice([-1, 1])
-		self.y_vel = random.randint(5, 10) * random.choice([-1, 1])
+		self.x_vel = random.randrange(5, 10) * random.choice([-1, 1])
+		self.y_vel = random.randrange(5, 10) * random.choice([-1, 1])
+		self.rect.x = x
+		self.rect.y = y
 
 	def move(self, x: int, y: int) -> None:
 		self.rect.centerx += x
 		self.rect.centery += y
 
 	def draw(self, surface: pygame.Surface) -> None:
-		surface.blit(self.image, self.rect.topleft)
+		surface.blit(self.image, (self.rect.topleft))
 	
 	def update(self):
 		super().update()
-		self.move(self.x_dir, self.y_dir)
+		self.move(self.x_vel, self.y_vel)
 		if self.rect.left < 0 or self.rect.right > SCREEN_WIDTH:
 			self.x_vel *= -1
 		if self.rect.top < 0 or self.rect.bottom > SCREEN_HEIGHT:
