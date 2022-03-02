@@ -3,7 +3,7 @@ import os
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "something"
 
 from enemies import Enemies
-from scores import Scores
+from hud import HUD
 from constants import *
 import pygame
 import pygame.locals as locals
@@ -28,9 +28,9 @@ def main():
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10)
 	alpha_surf.bind(player, C_RED)
 
-	# load previous scores
-	scores = Scores(PLAYER_SCORE_FILE, player, clock)
-	scores.load()
+	# load previous HUD
+	HUD = HUD(PLAYER_SCORE_FILE, player, clock)
+	HUD.load()
 
 	enemies = Enemies()
 
@@ -44,8 +44,8 @@ def main():
 		for event in pygame.event.get():
 			if event.type == locals.QUIT:
 				# Save the player's score
-				scores.add(hex(id(player)), player.score)
-				scores.save()
+				HUD.add(hex(id(player)), player.score)
+				HUD.save()
 
 				return		
 
@@ -67,8 +67,8 @@ def main():
 		enemies.update()
 		enemies.draw(SCREEN)
 
-		scores.update(dt)
-		scores.draw(SCREEN)
+		HUD.update(dt)
+		HUD.draw(SCREEN)
 
 		pygame.display.flip()
 

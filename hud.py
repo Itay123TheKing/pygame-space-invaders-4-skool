@@ -6,7 +6,7 @@ from pygame import font, time
 
 from player import Player
 
-class Scores:
+class HUD:
 	def __init__(self, path: str, player: Player, clock: time.Clock) -> None:
 		self.path = path
 		self.score_list: List[Dict] = []
@@ -17,32 +17,32 @@ class Scores:
 		self.time_passed = 0
 
 	def load(self) -> None:
-		fix_JSON = lambda: json.dump({"scores": []}, open(self.path, "w"), indent="\t")
+		fix_JSON = lambda: json.dump({"HUD": []}, open(self.path, "w"), indent="\t")
 
 		if os.path.exists(self.path):
 			with open(self.path, "r") as file:
 				try:
 					json_object: dict = json.load(file)
-					if json_object.get('scores'):
-						self.score_list = json_object['scores']
+					if json_object.get('HUD'):
+						self.score_list = json_object['HUD']
 					else:
-						# If scores isn't in the json, fix the file
+						# If HUD isn't in the json, fix the file
 						fix_JSON()
 				except json.JSONDecodeError:
 					# If file is empty for some reason, fix the file
 					fix_JSON()
 		else:
-			# if file does not exist, create it and write empty scores
+			# if file does not exist, create it and write empty HUD
 			fix_JSON()
 
-		# Sort the scores
+		# Sort the HUD
 		self.score_list.sort(key=lambda n: n['score'], reverse=True)
 		self.highscore = self.score_list[0]['score']
 
 	
 	def save(self) -> None:
 		with open(self.path, "w") as file:
-			json.dump({"scores": self.score_list}, file, indent="\t")
+			json.dump({"HUD": self.score_list}, file, indent="\t")
 
 	def add(self, name: str, score: int) -> None:
 		self.score_list.append({
