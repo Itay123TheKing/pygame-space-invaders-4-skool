@@ -60,11 +60,11 @@ def main():
 	alpha_surf.bind(player, C_RED)
 
 	enemies = Enemies()
-
 	enemies.add(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
 	enemies.add(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
 	enemies.add(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
 
+	alpha_surf.bind(enemies.group, C_GREEN)
 	background = Background(SCREEN, player)
 
 	while True:
@@ -93,6 +93,7 @@ def main():
 
 		alpha_surf.render_all_binded()
 		alpha_surf.draw()
+
 
 		player.draw(SCREEN)
 
