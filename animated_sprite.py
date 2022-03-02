@@ -15,14 +15,13 @@ class AnimatedSprite(pygame.sprite.Sprite):
 		if scale != 1:
 			self.frames = [pygame.transform.scale(frame, (width * scale, height * scale))
 				for frame in self.frames]
-				
+
 		self.colour_key = colourkey
 		for frame in self.frames:
 			frame.set_colorkey(colourkey)
 		
 		self.image = self.frames[self.current_frame]
 		
-		pygame.mask.from_surface(self.frames[0]).get_bounding_rects()
 		self.rect = self.image.get_rect()
 		self.fps = fps
 		self.last_tick = pygame.time.get_ticks()
