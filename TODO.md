@@ -6,6 +6,7 @@ Space Invaders Based Game For School Project
 
 - [ ] Clean main.py
 - [ ] HUD class
+  - [ ] move scores handeling there
 - [ ] Player shooting
 - [ ] Sheilds
 
