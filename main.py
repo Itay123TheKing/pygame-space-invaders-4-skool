@@ -56,6 +56,7 @@ def main():
 	retro_font = font.Font("assets/font/prstart.ttf", 16)
 
 	clock = pygame.time.Clock()
+	time_passed = 0
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10)
 	alpha_surf.bind(player, C_RED)
 
@@ -82,7 +83,13 @@ def main():
 					}, file, indent="\t")
 				return		
 
-		dt = clock.tick(60) / 1000.0
+		dt = clock.tick(FPS) / 1000.0
+		if time_passed > 1: # 1 second
+			player.addScore(1)
+			time_passed = 0
+
+		time_passed += dt
+
 		keys = pygame.key.get_pressed()
 
 		if keys[pygame.K_ESCAPE]: return
@@ -110,9 +117,6 @@ def main():
 
 		SCREEN.blit(highscore_text, (SCREEN_WIDTH - highscore_text.get_rect().width - 10, 10))
 		SCREEN.blit(highscore_value, (SCREEN_WIDTH - highscore_value.get_rect().width - 10, 20 + highscore_text.get_rect().bottom))
-
-		if pygame.time.get_ticks() % FPS == 0:
-			player.addScore(1)
 
 		SCREEN.blit(retro_font.render(f"FPS: {int(clock.get_fps())}", True, (255, 255, 255)), (10, SCREEN.get_height() - 25))
 
