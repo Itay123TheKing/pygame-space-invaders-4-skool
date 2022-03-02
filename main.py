@@ -29,8 +29,8 @@ def main():
 	alpha_surf.bind(player, C_RED)
 
 	# load previous HUD
-	HUD = HUD(PLAYER_SCORE_FILE, player, clock)
-	HUD.load()
+	hud = HUD(PLAYER_SCORE_FILE, player, clock)
+	hud.load()
 
 	enemies = Enemies()
 	enemies.add(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
@@ -44,8 +44,8 @@ def main():
 		for event in pygame.event.get():
 			if event.type == locals.QUIT:
 				# Save the player's score
-				HUD.add(hex(id(player)), player.score)
-				HUD.save()
+				hud.add(hex(id(player)), player.score)
+				hud.save()
 
 				return		
 
@@ -68,8 +68,8 @@ def main():
 		enemies.update()
 		enemies.draw(SCREEN)
 
-		HUD.update(dt)
-		HUD.draw(SCREEN)
+		hud.update(dt)
+		hud.draw(SCREEN)
 
 		pygame.display.flip()
 

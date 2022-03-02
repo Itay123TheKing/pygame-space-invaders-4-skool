@@ -15,7 +15,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 		if scale != 1:
 			self.frames = [pygame.transform.scale(frame, (width * scale, height * scale))
 				for frame in self.frames]
-
+				
 		self.colour_key = colourkey
 		for frame in self.frames:
 			frame.set_colorkey(colourkey)

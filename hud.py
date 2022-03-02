@@ -37,7 +37,8 @@ class HUD:
 
 		# Sort the HUD
 		self.score_list.sort(key=lambda n: n['score'], reverse=True)
-		self.highscore = self.score_list[0]['score']
+		if len(self.score_list) > 0:
+			self.highscore = self.score_list[0]['score']
 
 	
 	def save(self) -> None:
