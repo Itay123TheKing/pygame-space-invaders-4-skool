@@ -14,6 +14,7 @@ class Scores:
 		self.player = player
 		self.clock = clock
 		self.text_font = font.Font("assets/font/prstart.ttf", 16)
+		self.time_passed = 0
 
 	def load(self) -> None:
 		fix_JSON = lambda: json.dump({"scores": []}, open(self.path, "w"), indent="\t")
@@ -48,6 +49,19 @@ class Scores:
 			"name": name,
 			"score": score
 		})
+
+	def update(self, dt: float) -> None:
+		if self.player.score > self.highscore:
+			self.highscore = self.player.score
+
+		if time_passed > 1: # 1 second
+			self.player.addScore(1)
+			time_passed = 0
+
+		time_passed += dt		
+
+		
+
 	def draw(self, screen: pygame.Surface) -> None:
 		score_text = self.text_font.render(f"SCORE", True, (255, 255, 255))
 		score_value = self.text_font.render(f"{self.player.score:04}", True, (255, 255, 255))

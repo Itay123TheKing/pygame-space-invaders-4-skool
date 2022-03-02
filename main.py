@@ -50,11 +50,6 @@ def main():
 				return		
 
 		dt = clock.tick(FPS) / 1000.0
-		if time_passed > 1: # 1 second
-			player.addScore(1)
-			time_passed = 0
-
-		time_passed += dt
 
 		keys = pygame.key.get_pressed()
 
@@ -72,6 +67,7 @@ def main():
 		enemies.update()
 		enemies.draw(SCREEN)
 
+		scores.update(dt)
 		scores.draw(SCREEN)
 
 		pygame.display.flip()
