@@ -18,11 +18,7 @@ class Enemies:
 	
 	def update(self):
 		for enemy in self.enemies:
-			enemy.move(enemy.x_dir, enemy.y_dir)
-			if enemy.x < 0 or enemy.x + enemy.image.get_width() > SCREEN_WIDTH:
-				enemy.x_dir *= -1
-			if enemy.y < 0 or enemy.y + enemy.image.get_height() > SCREEN_HEIGHT:
-				enemy.y_dir *= -1
+			enemy.update()
 
 	def draw(self, surface: pygame.Surface) -> None:
 		for enemy in self.enemies:

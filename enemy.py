@@ -13,20 +13,24 @@ class EnemyType(Enum):
 class Enemy(animated_sprite.AnimatedSprite):
 	def __init__(self, type: EnemyType, x: int, y: int, *groups: pygame.sprite.Group) -> None:
 		super().__init__(ENEMIES[type.value - 1], ENEMY_COLOURKEY,
-			ENEMY_WIDTH, ENEMY_HEIGHT,
 			ENEMY_FRAMECOUNT, ENEMY_FPS, ENEMY_SCALE, *groups)
 
 		self.type = type
-		self.x = x
-		self.y = y
-		x_sign = random.choice([-1, 1])
-		y_sign = random.choice([-1, 1])
-		self.x_dir = x_sign * random.randint(5, 10)
-		self.y_dir = y_sign * random.randint(5, 10)
+		self.x_vel = random.randrange(5, 10) * random.choice([-1, 1])
+		self.y_vel = random.randrange(5, 10) * random.choice([-1, 1])
+		self.rect.x = x
+		self.rect.y = y
 
 	def move(self, x: int, y: int) -> None:
-		self.x += x
-		self.y += y
+		self.rect.center += (x, y)
 
 	def draw(self, surface: pygame.Surface) -> None:
 		surface.blit(self.image, (self.x, self.y))
+	
+	def update(self):
+		super().update()
+		self.move(self.x_vel, self.y_vel)
+		if self.rect.left < 0 or self.rect.right > SCREEN_WIDTH:
+			self.x_vel *= -1
+		if self.rect.top < 0 or self.rect.bottom > SCREEN_HEIGHT:
+			self.y_vel *= -1
