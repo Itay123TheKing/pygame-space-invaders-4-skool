@@ -8,13 +8,13 @@ Space Invaders Based Game For School Project
 - [ ] - [ ] HUD class
 - [ ] Player shooting
 - [ ] Sheilds
+
+### In Progress
 - [ ] Enem*ies* class:
   - [ ] Linked list of enemies
   - [ ] Move all enemies (also check for collision with the edge)
   - [ ] Shoot
   - [ ] Cool effects with new alpha layer 
-
-### In Progress
 
 - [ ] Type hinting functions and variables
 

@@ -5,8 +5,11 @@ from animated_sprite import AnimatedSprite
 
 class Player(AnimatedSprite):
 	def __init__(self, x: int, y: int, *groups: pygame.sprite.Group) -> None:
-		super().__init__(pygame.image.load('assets/sprites/nyan_cat.png'),
-		(0, 255, 255), 50, 22, 5, 5, 1, *groups)
+		#super().__init__(pygame.image.load('assets/sprites/nyan_cat.png'),
+		#(0, 255, 255), 50, 22, 5, 5, 1, *groups)
+		super().__init__(ENEMIES[0], ENEMY_COLOURKEY,
+			ENEMY_WIDTH, ENEMY_HEIGHT,
+			ENEMY_FRAMECOUNT, ENEMY_FPS, ENEMY_SCALE, *groups)
 		self.rect.bottom = y
 		self.rect.centerx = x
 		self.velocity = 0
@@ -51,6 +54,8 @@ class Player(AnimatedSprite):
 				self.facing = self.direction
 		else:
 			self.direction = 0
+
+
 
 	def addScore(self, score: int) -> None:
 		self.score += score

@@ -2,6 +2,7 @@
 import os
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "something"
 
+from enemies import Enemies
 from constants import *
 import pygame
 import json
@@ -11,13 +12,11 @@ import colorsys
 from background import Background
 from player import Player
 from enemy import Enemy, EnemyType
+from alpha_layer import AlphaLayer
 from typing import Dict, List
 
 pygame.init()
 font.init()
-
-def hsv2rgb(h, s=1.0, v=1):
-	return tuple(int(i * 255) for i in colorsys.hsv_to_rgb(h, s, v))
 
 def main():
 	highScores: List[Dict] = []
@@ -44,34 +43,33 @@ def main():
 		with open(PLAYER_SCORE_FILE, "w") as writeFile:
 			json.dump({"scores": []}, writeFile, indent="\t")
 
+	highscore = 0
+	if highScores and len(highScores) > 0:
+		highScores.sort(key=lambda n: n['score'], reverse=True)
+		highscore = highScores[0]['score']
+
 	pygame.display.set_caption("Space Invaders")
 	pygame.display.set_icon(pygame.image.load("assets/icon.png"))
 
-	# surface for adding alpha visual effect, still needs work
-	alphaSurf = pygame.Surface(SCREEN.get_size(), pygame.SRCALPHA)
+	alpha_surf = AlphaLayer(SCREEN)
 
-	retroFont = font.Font("assets/font/prstart.ttf", 16)
+	retro_font = font.Font("assets/font/prstart.ttf", 16)
 
 	clock = pygame.time.Clock()
-	allSprites = pygame.sprite.Group()
-	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
+	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10)
+	alpha_surf.bind(player, C_RED)
 
-	enemies = []
+	enemies = Enemies()
 
-	enemies.append(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
-	enemies.append(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
-	enemies.append(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
 
 	background = Background(SCREEN, player)
-
-	h = 0
 
 	while True:
 		for event in pygame.event.get():
 			if event.type == locals.QUIT:
-				pygame.quit()
-				font.quit()
-				
 				# Save the player's score
 				with open(PLAYER_SCORE_FILE, "w") as file:
 					highScores.append({
@@ -82,36 +80,41 @@ def main():
 					json.dump({
 						"scores": highScores
 					}, file, indent="\t")
-				
-				quit()
+				return		
 
-		dt = clock.tick(FPS) / 1000.0
+		dt = clock.tick(60) / 1000.0
 		keys = pygame.key.get_pressed()
 
 		if keys[pygame.K_ESCAPE]: return
 		player.move(keys)
 		player.update(dt)
 		
-		alphaSurf.fill((*hsv2rgb(h / 64), 220), special_flags=pygame.BLEND_RGBA_MULT)
-		h += 1
-		h %= 64
-		
 		background.update()
 
-		allSprites.draw(alphaSurf)
+		alpha_surf.render_all_binded()
+		alpha_surf.draw()
 
-		SCREEN.blit(alphaSurf, (0, 0))
+		player.draw(SCREEN)
 
-		for enemy in enemies:
-			enemy.update()
-			enemy.draw(SCREEN)
+		enemies.update()
+		enemies.draw(SCREEN)
 
-		SCREEN.blit(retroFont.render(f"SCORE: {player.score}", True, C_WHITE), (10, 10))
+		score_text = retro_font.render(f"SCORE", True, (255, 255, 255))
+		score_value = retro_font.render(f"{player.score:04}", True, (255, 255, 255))
+
+		highscore_text = retro_font.render(f"HI-SCORE", True, (255, 255, 255))
+		highscore_value = retro_font.render(f"{highscore:04}", True, (255, 255, 255))
+
+		SCREEN.blit(score_text, (10, 10))
+		SCREEN.blit(score_value, (10, 20 + score_text.get_rect().bottom))
+
+		SCREEN.blit(highscore_text, (SCREEN_WIDTH - highscore_text.get_rect().width - 10, 10))
+		SCREEN.blit(highscore_value, (SCREEN_WIDTH - highscore_value.get_rect().width - 10, 20 + highscore_text.get_rect().bottom))
 
 		if pygame.time.get_ticks() % FPS == 0:
 			player.addScore(1)
 
-		SCREEN.blit(retroFont.render(f"FPS: {int(clock.get_fps())}", True, (255, 255, 255)), (10, 30))
+		SCREEN.blit(retro_font.render(f"FPS: {int(clock.get_fps())}", True, (255, 255, 255)), (10, SCREEN.get_height() - 25))
 
 		pygame.display.flip()
 
@@ -119,3 +122,9 @@ def main():
 
 if __name__ == "__main__":
 	main()
+	pygame.quit()
+	font.quit()
+				
+	
+			
+	quit()

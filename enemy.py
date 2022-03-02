@@ -1,8 +1,9 @@
 from enum import Enum
-from typing import Literal
+import random
 from constants import *
 import pygame
 import animated_sprite
+import random
 
 class EnemyType(Enum):
 	SQUID   = SMALL  = TYPE1 = 1
@@ -18,6 +19,14 @@ class Enemy(animated_sprite.AnimatedSprite):
 		self.type = type
 		self.x = x
 		self.y = y
+		x_sign = random.choice([-1, 1])
+		y_sign = random.choice([-1, 1])
+		self.x_dir = x_sign * random.randint(5, 10)
+		self.y_dir = y_sign * random.randint(5, 10)
+
+	def move(self, x: int, y: int) -> None:
+		self.x += x
+		self.y += y
 
 	def draw(self, surface: pygame.Surface) -> None:
 		surface.blit(self.image, (self.x, self.y))
