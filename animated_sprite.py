@@ -1,16 +1,14 @@
 import pygame
 
 class AnimatedSprite(pygame.sprite.Sprite):
-	def __init__(self, sprite_sheet, colourkey, frame_count, fps, scale = 1, *groups):
+	def __init__(self, sprite_sheet, colourkey, width, height, frame_count, fps, scale = 1, *groups):
 		super().__init__(*groups)
 		
 		self.frame_count = frame_count
-		width = sprite_sheet.get_width() // frame_count
-		height = sprite_sheet.get_height()
 		self.current_frame = 0
-		self.frames = [pygame.Surface((width, height)).convert_alpha() for _ in range(frame_count)]
+		self.frames = [pygame.Surface((width, height)).convert_alpha() for i in range(frame_count)]
 		for i in range(frame_count):
-			self.frames[i].blit(sprite_sheet, (0, 0), (i * width, 0, width, height))
+			self.frames[i].blit(sprite_sheet, (0, 0), (i * width, 0, width, height)) 
 
 		if scale != 1:
 			self.frames = [pygame.transform.scale(frame, (width * scale, height * scale))
@@ -21,8 +19,6 @@ class AnimatedSprite(pygame.sprite.Sprite):
 			frame.set_colorkey(colourkey)
 		
 		self.image = self.frames[self.current_frame]
-		
-		pygame.mask.from_surface(self.frames[0]).get_bounding_rects()
 		self.rect = self.image.get_rect()
 		self.fps = fps
 		self.last_tick = pygame.time.get_ticks()

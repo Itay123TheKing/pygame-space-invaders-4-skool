@@ -21,6 +21,7 @@ class Enemies:
 	def update(self):
 		for enemy in self.enemies:
 			enemy.update()
+			
 
 	def draw(self, surface: pygame.Surface) -> None:
 		for enemy in self.enemies:
