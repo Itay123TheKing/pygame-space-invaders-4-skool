@@ -22,10 +22,11 @@ class Enemy(animated_sprite.AnimatedSprite):
 		self.rect.y = y
 
 	def move(self, x: int, y: int) -> None:
-		self.rect.center += (x, y)
+		self.rect.centerx += x
+		self.rect.centery += y
 
 	def draw(self, surface: pygame.Surface) -> None:
-		surface.blit(self.image, (self.x, self.y))
+		surface.blit(self.image, (self.rect.topleft))
 	
 	def update(self):
 		super().update()
