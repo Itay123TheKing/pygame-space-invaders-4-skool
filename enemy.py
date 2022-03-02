@@ -25,13 +25,14 @@ class Enemy(animated_sprite.AnimatedSprite):
 		self.y_dir = y_sign * random.randint(5, 10)
 
 	def move(self, x: int, y: int) -> None:
-		self.rect.centerx += x
-		self.rect.centery += y
+		self.x += x
+		self.y += y
+		self.rect.topleft = (self.x, self.y)
 
 	def draw(self, surface: pygame.Surface) -> None:
-		surface.blit(self.image, (self.rect.topleft))
-	
-	def update(self):
+		surface.blit(self.image, (self.x, self.y))
+
+	def update(self) -> None:
 		super().update()
 		self.move(self.x_dir, self.y_dir)
 		if self.x < 0 or self.x + self.image.get_width() > SCREEN_WIDTH:
