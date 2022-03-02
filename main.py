@@ -2,6 +2,7 @@
 import os
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "something"
 
+from enemies import Enemies
 from constants import *
 import pygame
 import json
@@ -56,11 +57,11 @@ def main():
 	allSprites = pygame.sprite.Group()
 	player = Player(SCREEN_HALF_WIDTH, SCREEN_HEIGHT - 10, allSprites)
 
-	enemies = []
+	enemies = Enemies()
 
-	enemies.append(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
-	enemies.append(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
-	enemies.append(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.SMALL, SCREEN_HALF_WIDTH - 100, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.MEDIUM, SCREEN_HALF_WIDTH, SCREEN_HALF_HEIGHT))
+	enemies.add(Enemy(EnemyType.LARGE, SCREEN_HALF_WIDTH + 100, SCREEN_HALF_HEIGHT))
 
 	background = Background(SCREEN, player)
 
@@ -102,9 +103,8 @@ def main():
 
 		SCREEN.blit(alphaSurf, (0, 0))
 
-		for enemy in enemies:
-			enemy.update()
-			enemy.draw(SCREEN)
+		enemies.update()
+		enemies.draw(SCREEN)
 
 		SCREEN.blit(retroFont.render(f"SCORE: {player.score}", True, C_WHITE), (10, 10))
 
